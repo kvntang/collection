@@ -2,18 +2,93 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Three.js Box Editor</title>
+    <title>MoMA unboxing</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <style>
       body {
         margin: 0;
-        background-color: #f0f0f0;
-        color: #444;
         overflow: hidden;
+        background-color: #f0f0f0;
+      }
+      /* Menu overlay styling */
+      #menu {
+        position: fixed;
+        top: 10px;
+        left: 10px;
+        max-width: 300px;
+        background: rgba(255, 255, 255, 0);
+        padding: 10px;
+        border-radius: 4px;
+        /* box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); */
+        z-index: 100;
+      }
+      /* Description overlay styling */
+      #description {
+        position: fixed;
+        bottom: 10px;
+        left: 10px;
+        background: rgba(255, 255, 255, 0.9);
+        padding: 15px;
+        border-radius: 10px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        z-index: 100;
+        max-width: 300px;
+      }
+      h2 {
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        margin: 0 0 5px;
+        font-size: 18px;
+      }
+
+      #three {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 70%;
+        height: 100%;
+      }
+      #description .date {
+        font-size: 12px;
+        color: #666;
+        margin-bottom: 8px;
+      }
+      #description p {
+        font-size: 14px;
+        margin: 0 0 10px;
+      }
+      #description button {
+        padding: 8px 12px;
+        font-size: 14px;
+        background-color: #000000;
+        border: none;
+        color: #fff;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      #description button:hover {
+        background-color: #2b2b2b;
       }
     </style>
   </head>
   <body>
-    <script type="module" src="/main.js"></script>
+    <div id="menu">
+      <!-- Menu content -->
+      <h2>MoMA Unboxing</h2>
+      <p>
+        This project unboxes the art and experience behind MoMA's exhibitions.
+        Discover more details about the work and its impact.
+      </p>
+    </div>
+    <div id="description">
+      <h2>Christina's World</h2>
+      <p>By Andrew Wyeth</p>
+      <div class="date">1948</div>
+      <p>
+        This project unboxes the art and experience behind MoMA's exhibitions.
+        Discover more details about the work and its impact.
+      </p>
+      <button>Learn More</button>
+    </div>
+    <div class="three"><script type="module" src="/main.js"></script></div>
   </body>
 </html>
