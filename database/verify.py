@@ -6,6 +6,9 @@ cursor = conn.cursor()
 # Fetch all images, showing NULL values
 cursor.execute("SELECT * FROM paintings")
 # cursor.execute("SELECT * FROM paintings WHERE image_url IS NOT NULL AND image_url != ''")
+# cursor.execute("SELECT * FROM paintings WHERE image_url IS NOT NULL AND image_url != '' AND height IS NOT NULL AND width IS NOT NULL)
+
+
 
 paintings = cursor.fetchall()
 

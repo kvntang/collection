@@ -39,7 +39,6 @@ def process_json_array(input_filename, conn):
             if obj.get("Classification") == "Painting":
                 title = obj.get("Title")
                 artist_list = obj.get("Artist")
-                # Join artist list into a string if necessary.
                 artist = ", ".join(artist_list) if isinstance(artist_list, list) else artist_list
                 date = obj.get("Date")
                 medium = obj.get("Medium")
@@ -49,7 +48,6 @@ def process_json_array(input_filename, conn):
                 height = obj.get("Height (cm)")
                 width = obj.get("Width (cm)")
 
-                # If height or width is a Decimal, convert to float.
                 if isinstance(height, decimal.Decimal):
                     height = float(height)
                 if isinstance(width, decimal.Decimal):
@@ -90,8 +88,8 @@ def process_json_lines(input_filename, conn):
                 insert_painting(conn, painting)
 
 def main():
-    input_filename = "../Artworks.json"   # Path to your JSON file.
-    db_filename = "paintings.db"            # SQLite database file.
+    input_filename = "Artworks.json"   # Path to your JSON file.
+    db_filename = "../paintings.db"         # SQLite database file saved in the same root as Artworks.json.
     
     # Connect to the SQLite database (it will be created if it doesn't exist).
     conn = sqlite3.connect(db_filename)

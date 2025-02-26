@@ -29,7 +29,7 @@ def count_classification_json_lines(filename, target_classification):
 
 def main():
     # Hardcoded filename; update this to your file's path.
-    filename = '../Artworks.json'
+    filename = 'Artworks.json'
     # Set the target classification to count.
     target_classification = 'Painting'
     

@@ -42,6 +42,16 @@ def main():
                 cursor.execute(f"SELECT COUNT(*) FROM {table_name} WHERE image_url IS NOT NULL AND image_url != ''")
                 valid_image_count = cursor.fetchone()[0]
                 print(f"  Rows with valid image_url: {valid_image_count}")
+                
+                # Additional check: rows with valid image_url and non-null height and width.
+                cursor.execute(f"""
+                    SELECT COUNT(*) FROM {table_name} 
+                    WHERE image_url IS NOT NULL AND image_url != ''
+                      AND height IS NOT NULL 
+                      AND width IS NOT NULL
+                """)
+                valid_image_and_dimensions_count = cursor.fetchone()[0]
+                print(f"  Rows with valid image_url and valid height & width: {valid_image_and_dimensions_count}")
             
             print()
         
