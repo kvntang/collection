@@ -32,7 +32,7 @@ def count_classifications_json_lines(filename):
 
 def main():
     # Hardcoded filename; update this to your file's path.
-    filename = 'Artworks.json'
+    filename = '../Artworks.json'
     
     # Read the first non-whitespace character to determine file format.
     with open(filename, 'r', encoding='utf-8') as f:

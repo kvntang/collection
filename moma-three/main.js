@@ -22,7 +22,8 @@ animate();
 function init() {
   // --- Scene Setup ---
   scene = new THREE.Scene();
-  scene.background = new THREE.Color(0xf0f0f0);
+  // scene.background = new THREE.Color(0xf0f0f0);
+  scene.background = null;
 
   // --- Isometric (Orthographic) Camera Setup ---
   const aspect = window.innerWidth / window.innerHeight;
@@ -39,7 +40,7 @@ function init() {
   scene.add(camera);
 
   // --- Renderer ---
-  renderer = new THREE.WebGLRenderer({ antialias: true });
+  renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
   renderer.setSize(window.innerWidth, window.innerHeight);
   document.body.appendChild(renderer.domElement);
 
@@ -135,6 +136,8 @@ function updateBoxGeometry() {
   });
   const darkBlue = new THREE.MeshLambertMaterial({
     color: 0x4fbdfd,
+    transparent: true,
+    opacity: 0.5,
     side: THREE.DoubleSide,
   });
 
@@ -153,7 +156,7 @@ function updateBoxGeometry() {
 
   // Optionally add edges for clarity.
   const edges = new THREE.EdgesGeometry(geometry);
-  const lineMaterial = new THREE.LineBasicMaterial({ color: 0xffffff });
+  const lineMaterial = new THREE.LineBasicMaterial({ color: 0x87cefa });
   const lineSegments = new THREE.LineSegments(edges, lineMaterial);
   boxMesh.add(lineSegments);
 
@@ -165,7 +168,7 @@ function createHandles() {
   for (const key in handles) {
     scene.remove(handles[key]);
   }
-  const handleMaterial = new THREE.MeshBasicMaterial({ color: 0xf3f6f4 });
+  const handleMaterial = new THREE.MeshBasicMaterial({ color: 0xffe400 });
   const handleGeom = new THREE.BoxGeometry(10, 10, 10);
 
   // Red cubes on each face (for box manipulation)
@@ -218,7 +221,7 @@ function makeTextPlane(message, parameters, align) {
   parameters = parameters || {};
   const fontface = parameters.fontface || "Arial";
   const fontsize = parameters.fontsize || 48; // Bigger font size
-  const borderThickness = parameters.borderThickness || 4;
+  const borderThickness = parameters.borderThickness || 2;
 
   // Create a canvas and set its context
   const canvas = document.createElement("canvas");
@@ -237,7 +240,7 @@ function makeTextPlane(message, parameters, align) {
 
   // Redraw text with the new canvas size
   context.font = fontsize + "px " + fontface;
-  context.fillStyle = "rgba(0,0,0,0.2)";
+  context.fillStyle = "rgba(0, 131, 239, 0.5)";
   context.fillText(message, borderThickness, fontsize + borderThickness);
 
   const texture = new THREE.CanvasTexture(canvas);
@@ -385,6 +388,16 @@ function updateInnerBox() {
   // Center the inner box within the main box
   innerBox.position.set(0, 0, 0);
   scene.add(innerBox);
+
+  // ---- Create an outline for the inner cube ----
+  const outlineMaterial = new THREE.MeshBasicMaterial({
+    color: 0x000000, // Black outline
+    side: THREE.BackSide, // Render behind the inner cube
+  });
+
+  const outlineMesh = new THREE.Mesh(innerGeometry, outlineMaterial);
+  outlineMesh.scale.multiplyScalar(1.01); // Slightly larger to make outline visible
+  innerBox.add(outlineMesh);
 }
 
 function onPointerDown(event) {
@@ -401,6 +414,7 @@ function onPointerDown(event) {
     for (let key in handles) {
       if (handles[key] === intersects[0].object) {
         selectedKey = key;
+        console.log("Selected handle/surface:", selectedKey);
         break;
       }
     }
